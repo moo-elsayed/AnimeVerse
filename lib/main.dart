@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/data/repos/anime_repo_imp.dart';
 import 'features/presentation/views/home_view/home_view.dart';
+import 'features/presentation/views/splash_view/splash_view.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       create: (context) => AnimeCubit(AnimeRepoImp())..getAllAnime(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeView(),
+        home: SplashView(),
       ),
     );
   }
