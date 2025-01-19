@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AnimeCubit(AnimeRepoImp()),
+      create: (context) => AnimeCubit(AnimeRepoImp())..getAllAnime(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomeView(),
