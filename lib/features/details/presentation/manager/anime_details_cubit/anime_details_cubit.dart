@@ -6,7 +6,15 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
   AnimeDetailsCubit(this.animeRepo) : super(AnimeDetailsInitial());
   final AnimeDetailsRepo animeRepo;
 
+  String? animeID;
+
   Future getAnimeContent({required String animeId}) async {
+    // عشان منعملش ال request تاني على الفاضي لو نفس الانمي
+    if (animeID != null && animeId == animeID) {
+      return;
+    }
+    animeID = animeId;
+
     emit(GetAnimeContentLoading());
     var result = await animeRepo.getAnimeContent(animeId: animeId);
     result.fold(

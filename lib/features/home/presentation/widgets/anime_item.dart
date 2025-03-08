@@ -23,8 +23,8 @@ class AnimeItem extends StatelessWidget {
           type: PageTransitionType.leftToRight,
           //duration: Duration(milliseconds: 230),
           child: AnimeView(
-            animeUrl:
-                animeItem.animeUrl.substring(30, animeItem.animeUrl.length - 1),
+            animeId:
+                animeItem.animeUrl.substring(29, animeItem.animeUrl.length - 1),
             title: animeItem.animeName,
           ),
         );

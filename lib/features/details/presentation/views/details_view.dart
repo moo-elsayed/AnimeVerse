@@ -8,9 +8,9 @@ import '../widgets/details_view_body.dart';
 
 
 class DetailsView extends StatefulWidget {
-  const DetailsView({super.key, required this.animeUrl});
+  const DetailsView({super.key, required this.animeId});
 
-  final String animeUrl;
+  final String animeId;
 
   @override
   State<DetailsView> createState() => _DetailsViewState();
@@ -20,7 +20,7 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   void initState() {
     BlocProvider.of<AnimeDetailsCubit>(context)
-        .getAnimeContent(animeId: widget.animeUrl);
+        .getAnimeContent(animeId: widget.animeId);
     super.initState();
   }
 

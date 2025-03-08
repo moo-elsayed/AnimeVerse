@@ -34,6 +34,7 @@ class AnimeService {
   }
 
   Future<AnimeContent> getAnimeContent({required String animeId}) async {
+    log(animeId);
     var response = await apiService.get(
         url: '${apiService.baseUrl}anime/details/$animeId');
     return AnimeContent.fromJson(response.data);
