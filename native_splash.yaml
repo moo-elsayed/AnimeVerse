@@ -1,0 +1,17 @@
+flutter_native_splash:
+  android: true
+  #ios: false
+  #
+  color: "#182128"
+  android_gravity: center  # يضمن ظهور الصورة كاملة بدون قص
+  #full_screen: true  # اجعلها true ليتم إخفاء شريط الحالة أثناء شاشة البداية
+  #  image: "assets/images/appIcon.png"  # ضع مسار الصورة هنا
+  #  android_gravity: center  # يضمن وضع الصورة في المنتصف
+  #  full_screen: true
+
+  android_12:
+    image: assets/app_icon.jpg  # استبدله بالصورة الخاصة بك
+    color: "#182128"  # لون الخلفية
+    icon_background_color: "#182128"  # يساعد في تقليل التأثير إذا كان هناك قص للصورة
+
+

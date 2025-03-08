@@ -6,7 +6,7 @@ import 'api_keys.dart';
 
 class ApiService {
   final Dio dio = Dio();
-  final String baseUrl = 'https://guided-talented-snapper.ngrok-free.app/';
+  final String baseUrl = 'https://anime.apiclub.site/';
   final _defaultHeaders = {
     'Authorization': 'Bearer ${ApiKeys.apiKey}', // Bearer Token
     'X-API-Key': ApiKeys.apiKey, // Custom header

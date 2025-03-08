@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:anime_universe/core/utlis/api_service.dart';
-import 'package:anime_universe/features/data/models/all_anime.dart';
-import 'package:anime_universe/features/data/models/anime_content.dart';
-import 'package:anime_universe/features/data/models/search_anime.dart';
-import 'package:anime_universe/features/data/models/watch_servers.dart';
+import 'package:anime_universe/features/details/data/models/anime_content.dart';
+
+import '../../features/home/data/models/all_anime.dart';
+import '../../features/home/data/models/search_anime.dart';
+import '../../features/home/data/models/watch_servers.dart';
+
 
 
 
