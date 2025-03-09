@@ -17,8 +17,17 @@ class HomeView extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        centerTitle: true,
+        //centerTitle: true,
         backgroundColor: KSecondaryColor,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () {},
+          )
+        ],
       ),
       body: HomeViewBody(),
     );

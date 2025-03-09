@@ -1,9 +1,11 @@
 import 'package:anime_universe/constants.dart';
+import 'package:anime_universe/features/details/presentation/manager/anime_details_cubit/anime_details_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
+import '../manager/anime_details_cubit/anime_details_states.dart';
+import '../widgets/details_view_body.dart';
 import '../widgets/episodes_view_body.dart';
-import 'details_view.dart';
 
 class AnimeView extends StatefulWidget {
   const AnimeView({super.key, required this.title, required this.animeId});
@@ -17,14 +19,12 @@ class AnimeView extends StatefulWidget {
 
 class _AnimeViewState extends State<AnimeView> {
   int _currentIndex = 0;
-  late final List<Widget> _pages;
 
   @override
   void initState() {
-    _pages = [
-      DetailsView(animeId: widget.animeId),
-      EpisodesViewBody(),
-    ];
+    BlocProvider.of<AnimeDetailsCubit>(context)
+        .getAnimeContent(animeId: widget.animeId);
+
     super.initState();
   }
 
@@ -62,9 +62,9 @@ class _AnimeViewState extends State<AnimeView> {
             },
             tabBorderRadius: 24,
             backgroundColor: KSecondaryColor,
-            activeColor: Colors.black,
+            activeColor: KMainColor,
             tabBackgroundColor: Colors.white,
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             gap: 8,
             tabs: [
               GButton(
@@ -79,9 +79,28 @@ class _AnimeViewState extends State<AnimeView> {
           ),
         ),
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
+      body: BlocBuilder<AnimeDetailsCubit, AnimeDetailsStates>(
+        builder: (context, state) {
+          if (state is GetAnimeContentFailure) {
+            return Center(
+              child: Text(state.errorMessage),
+            );
+          } else if (state is GetAnimeContentSuccess) {
+            return IndexedStack(
+              index: _currentIndex,
+              children: [
+                DetailsViewBody(animeContent: state.animeContent),
+                EpisodesViewBody(episodes: state.animeContent.episodes),
+              ],
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            );
+          }
+        },
       ),
     );
   }
