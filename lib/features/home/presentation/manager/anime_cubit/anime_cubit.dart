@@ -25,14 +25,4 @@ class AnimeCubit extends Cubit<AnimeStates> {
         (searchedAnimeList) =>
             emit(SearchAnimeSuccess(searchedAnimeList: searchedAnimeList)));
   }
-
-  Future getWatchServers({required String episodeUrl}) async {
-    emit(GetWatchServersLoading());
-    var result = await animeRepo.getWatchServers(episodeUrl: episodeUrl);
-    result.fold(
-        (failure) =>
-            emit(GetWatchServersFailure(errorMessage: failure.errorMessage)),
-        (watchServers) =>
-            emit(GetWatchServersSuccess(watchServers: watchServers)));
-  }
 }

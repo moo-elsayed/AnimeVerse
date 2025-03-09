@@ -33,4 +33,14 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
       },
     );
   }
+
+  Future getWatchServers({required String episodeUrl}) async {
+    emit(GetWatchServersLoading());
+    var result = await animeRepo.getWatchServers(episodeUrl: episodeUrl);
+    result.fold(
+            (failure) =>
+            emit(GetWatchServersFailure(errorMessage: failure.errorMessage)),
+            (watchServers) =>
+            emit(GetWatchServersSuccess(watchServers: watchServers)));
+  }
 }

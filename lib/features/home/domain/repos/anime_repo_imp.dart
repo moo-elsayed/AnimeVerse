@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 
 import '../../data/models/all_anime.dart';
 import '../../data/models/search_anime.dart';
-import '../../data/models/watch_servers.dart';
+import '../../../details/data/models/watch_servers.dart';
 import 'anime_repo.dart';
 
 class AnimeRepoImp implements AnimeRepo {
@@ -32,23 +32,7 @@ class AnimeRepoImp implements AnimeRepo {
 
 
 
-  @override
-  Future<Either<Failure, WatchServers>> getWatchServers(
-      {required String episodeUrl}) async {
-    try {
-      WatchServers watchServers =
-          await animeService.getWatchServes(episodeUrl: episodeUrl);
-      return right(watchServers);
-    } catch (e) {
-      if (e is DioException) {
-        log(e.toString());
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        log(e.toString());
-        return left(ServerFailure(errorMessage: e.toString()));
-      }
-    }
-  }
+
 
   @override
   Future<Either<Failure, List<SearchAnime>>> searchAnime(

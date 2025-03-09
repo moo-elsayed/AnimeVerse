@@ -1,7 +1,6 @@
-
 import '../../../data/models/all_anime.dart';
 import '../../../data/models/search_anime.dart';
-import '../../../data/models/watch_servers.dart';
+import '../../../../details/data/models/watch_servers.dart';
 
 abstract class AnimeStates {}
 
@@ -40,39 +39,4 @@ class SearchAnimeFailure extends AnimeStates {
 
   SearchAnimeFailure({required this.errorMessage});
 }
-//-----------------------------------
-
-//-----------------------------------
-
-// class GetAnimeContentLoading extends AnimeStates {}
-//
-// class GetAnimeContentSuccess extends AnimeStates {
-//   final AnimeContent animeContent;
-//
-//   GetAnimeContentSuccess({required this.animeContent});
-// }
-//
-// class GetAnimeContentFailure extends AnimeStates {
-//   final String errorMessage;
-//
-//   GetAnimeContentFailure({required this.errorMessage});
-// }
-//-----------------------------------
-
-//-----------------------------------
-
-class GetWatchServersLoading extends AnimeStates {}
-
-class GetWatchServersSuccess extends AnimeStates {
-  final WatchServers watchServers;
-
-  GetWatchServersSuccess({required this.watchServers});
-}
-
-class GetWatchServersFailure extends AnimeStates {
-  final String errorMessage;
-
-  GetWatchServersFailure({required this.errorMessage});
-}
-
 //-----------------------------------

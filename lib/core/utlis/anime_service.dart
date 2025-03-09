@@ -5,7 +5,7 @@ import 'package:anime_universe/features/details/data/models/anime_content.dart';
 
 import '../../features/home/data/models/all_anime.dart';
 import '../../features/home/data/models/search_anime.dart';
-import '../../features/home/data/models/watch_servers.dart';
+import '../../features/details/data/models/watch_servers.dart';
 
 
 
