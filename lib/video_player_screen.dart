@@ -1,118 +1,128 @@
-// import 'package:chewie/chewie.dart';
 // import 'package:flutter/material.dart';
-//
-// import 'package:video_player/video_player.dart';
+// import 'package:flutter/services.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 //
 // class VideoPlayerScreen extends StatefulWidget {
-//   const VideoPlayerScreen({super.key});
+//   const VideoPlayerScreen({super.key, required this.url});
+//
+//   final String url;
 //
 //   @override
 //   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 // }
 //
 // class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-//   late VideoPlayerController _videoPlayerController;
-//   ChewieController? _chewieController;
+//   late final WebViewController controller;
 //
 //   @override
 //   void initState() {
 //     super.initState();
-//     _initializeVideoPlayer();
-//   }
-//
-//   Future<void> _initializeVideoPlayer() async {
-//     // Replace this with your direct video file URL
-//     _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-//         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'));
-//
-//     await _videoPlayerController.initialize();
-//
-//     setState(() {
-//       _chewieController = ChewieController(
-//         videoPlayerController: _videoPlayerController,
-//         autoPlay: false,
-//         looping: true,
+//     controller = WebViewController()
+//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+//       ..setNavigationDelegate(
+//         NavigationDelegate(
+//           onProgress: (int progress) {},
+//           onPageStarted: (String url) {},
+//           onPageFinished: (String url) {},
+//           onHttpError: (HttpResponseError error) {},
+//           onWebResourceError: (WebResourceError error) {},
+//           onNavigationRequest: (NavigationRequest request) {
+//             if (request.url.startsWith('https://www.youtube.com/')) {
+//               return NavigationDecision.prevent;
+//             }
+//             return NavigationDecision.navigate;
+//           },
+//         ),
 //       );
-//     });
-//   }
 //
-//   @override
-//   void dispose() {
-//     _videoPlayerController.dispose();
-//     _chewieController?.dispose();
-//     super.dispose();
+//     // تحميل الرابط بعد إنشاء الـ Controller
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       controller.loadRequest(Uri.parse(widget.url));
+//     });
 //   }
 //
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       body: Center(
-//         child: _chewieController != null &&
-//                 _chewieController!.videoPlayerController.value.isInitialized
-//             ? Chewie(controller: _chewieController!)
-//             : CircularProgressIndicator(),
+//       appBar: AppBar(
+//         systemOverlayStyle: SystemUiOverlayStyle(
+//           //statusBarColor: Colors.transparent,
+//           systemNavigationBarIconBrightness: Brightness.dark,
+//         ),
+//       ),
+//       body: WebViewWidget(
+//         controller: controller,
 //       ),
 //     );
 //   }
 // }
 
+import 'package:anime_universe/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  final String megaUrl;
+  final String videoUrl;
 
-  const VideoPlayerScreen({super.key, required this.megaUrl});
+  const VideoPlayerScreen({Key? key, required this.videoUrl}) : super(key: key);
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  var controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setNavigationDelegate(
-      NavigationDelegate(
-        onProgress: (int progress) {
-          // Update loading bar.
-        },
-        onPageStarted: (String url) {},
-        onPageFinished: (String url) {},
-        onHttpError: (HttpResponseError error) {},
-        onWebResourceError: (WebResourceError error) {},
-        onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith('https://www.youtube.com/')) {
-            return NavigationDecision.prevent;
-          }
-          return NavigationDecision.navigate;
-        },
-      ),
-    )
-    ..loadRequest(Uri.parse('https://mega.nz/embed/OV5TlSLD#AHBwJ9ljnVKjjlZ7_0i8-Hsj844XcyNN3kF4pk7kjNo'));
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.black)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (String url) {
+            print('Loading: $url');
+          },
+          onPageFinished: (String url) {
+            print('Loaded: $url');
+          },
+          onWebResourceError: (WebResourceError error) {
+            print("WebView Error: ${error.description}");
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.videoUrl), headers: {
+        "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+      });
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('MEGA Video Player')),
-      body: WebViewWidget(
-        controller: controller,
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: KSecondaryColor,
+        systemOverlayStyle: SystemUiOverlayStyle(),
       ),
+      body: WebViewWidget(controller: _controller),
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_html_video/flutter_html_video.dart';
-//
-// class VideoPlayerScreen extends StatelessWidget {
-//   const VideoPlayerScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Html(customRenders: {
-//         videoMatcher(): videoRender(),
-//       }),
-//     );
-//   }
-// }

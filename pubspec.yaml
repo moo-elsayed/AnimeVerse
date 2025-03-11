@@ -42,6 +42,9 @@ dependencies:
   cached_network_image: ^3.4.1
   page_transition: ^2.2.1
   google_nav_bar: ^5.0.7
+  web_video_player: ^0.0.1-dev.2
+  chewie: ^1.10.0
+  flutter_inappwebview: ^6.1.5
 
 
 dev_dependencies:

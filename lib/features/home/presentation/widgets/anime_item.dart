@@ -56,7 +56,11 @@ class AnimeItem extends StatelessWidget {
                     //duration: Duration(milliseconds: 230),
                     child: WatchServersView(
                       episodeNumber: animeItem.episodes[0].episodeNumber,
-                      serversList: animeItem.episodes[0].servers,
+                      link: animeItem.episodes[0].servers
+                          .where(
+                              (element) => element.name.contains('megamax me'))
+                          .toList()[0]
+                          .url,
                     ),
                   );
                 },
