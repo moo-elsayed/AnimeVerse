@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../../../../core/models/server.dart';
+
 List<AllAnime> allAnimeFromJson(String str) => List<AllAnime>.from(json.decode(str).map((x) => AllAnime.fromJson(x)));
 
 String allAnimeToJson(List<AllAnime> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -68,29 +70,7 @@ class Episode {
   };
 }
 
-class Server {
-  Name name;
-  Quality quality;
-  String url;
 
-  Server({
-    required this.name,
-    required this.quality,
-    required this.url,
-  });
-
-  factory Server.fromJson(Map<String, dynamic> json) => Server(
-    name: nameValues.map[json["name"]]!,
-    quality: qualityValues.map[json["quality"]]!,
-    url: json["url"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": nameValues.reverse[name],
-    "quality": qualityValues.reverse[quality],
-    "url": url,
-  };
-}
 
 enum Name {
   FH_DDAILYMOTION,

@@ -1,6 +1,5 @@
 import '../../../data/models/all_anime.dart';
 import '../../../data/models/search_anime.dart';
-import '../../../../details/data/models/watch_servers.dart';
 
 abstract class AnimeStates {}
 

@@ -51,6 +51,17 @@ class _AnimeViewState extends State<AnimeView> {
         title: Text(widget.title),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
         backgroundColor: KSecondaryColor,
+        actions: _currentIndex == 1
+            ? [
+                IconButton(
+                  icon: Icon(Icons.sort, color: Colors.white),
+                  onPressed: () {
+                    BlocProvider.of<AnimeDetailsCubit>(context).reverse();
+                    setState(() {});
+                  },
+                )
+              ]
+            : [],
       ),
       bottomNavigationBar: Container(
         color: KSecondaryColor,
@@ -90,7 +101,7 @@ class _AnimeViewState extends State<AnimeView> {
               index: _currentIndex,
               children: [
                 DetailsViewBody(animeContent: state.animeContent),
-                EpisodesViewBody(episodes: state.animeContent.episodes),
+                EpisodesViewBody(),
               ],
             );
           } else {

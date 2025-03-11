@@ -28,8 +28,7 @@ class SearchAnime {
     alt: json["alt"],
     animeUrl: json["anime_url"],
     title: json["title"],
-    //episodes: json["episodes"],
-    episodes: json["episodes"]?.toString() ?? "0", // التعامل مع جميع الحالات
+    episodes: json["episodes"],
   );
 
   Map<String, dynamic> toJson() => {

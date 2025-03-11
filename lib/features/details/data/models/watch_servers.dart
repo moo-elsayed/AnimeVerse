@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../../../../core/models/server.dart';
+
 WatchServers watchServersFromJson(String str) =>
     WatchServers.fromJson(json.decode(str));
 
@@ -23,30 +25,6 @@ class WatchServers {
 
   Map<String, dynamic> toJson() => {
         "servers": List<dynamic>.from(servers.map((x) => x.toJson())),
-      };
-}
-
-class Server {
-  Quality quality;
-  String name;
-  String url;
-
-  Server({
-    required this.quality,
-    required this.name,
-    required this.url,
-  });
-
-  factory Server.fromJson(Map<String, dynamic> json) => Server(
-        quality: qualityValues.map[json["quality"]]!,
-        name: json["name"],
-        url: json["url"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "quality": qualityValues.reverse[quality],
-        "name": name,
-        "url": url,
       };
 }
 

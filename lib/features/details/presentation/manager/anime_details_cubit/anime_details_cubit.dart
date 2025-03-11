@@ -25,8 +25,12 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
       (animeContent) {
         episodes = animeContent.episodes
           ..sort((a, b) {
-            int numA = int.tryParse(a.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-            int numB = int.tryParse(b.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+            int numA = int.tryParse(
+                    a.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ??
+                0;
+            int numB = int.tryParse(
+                    b.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ??
+                0;
             return numA.compareTo(numB);
           });
         emit(GetAnimeContentSuccess(animeContent: animeContent));
@@ -34,13 +38,7 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
     );
   }
 
-  Future getWatchServers({required String episodeUrl}) async {
-    emit(GetWatchServersLoading());
-    var result = await animeRepo.getWatchServers(episodeUrl: episodeUrl);
-    result.fold(
-            (failure) =>
-            emit(GetWatchServersFailure(errorMessage: failure.errorMessage)),
-            (watchServers) =>
-            emit(GetWatchServersSuccess(watchServers: watchServers)));
+  void reverse() {
+    episodes = episodes.reversed.toList();
   }
 }

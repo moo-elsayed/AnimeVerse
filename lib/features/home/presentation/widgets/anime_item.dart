@@ -1,10 +1,10 @@
 import 'package:anime_universe/features/details/presentation/views/anime_view.dart';
+import 'package:anime_universe/features/details/presentation/views/watch_servers_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../data/models/all_anime.dart';
-
 
 class AnimeItem extends StatelessWidget {
   const AnimeItem({super.key, required this.animeItem});
@@ -49,18 +49,30 @@ class AnimeItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                decoration: ShapeDecoration(
-                  color: Colors.white54,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              GestureDetector(
+                onTap: () {
+                  context.pushTransition(
+                    type: PageTransitionType.leftToRight,
+                    //duration: Duration(milliseconds: 230),
+                    child: WatchServersView(
+                      episodeNumber: animeItem.episodes[0].episodeNumber,
+                      serversList: animeItem.episodes[0].servers,
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Colors.white54,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                ),
-                margin: EdgeInsets.only(left: 2),
-                padding: const EdgeInsets.all(2),
-                child: Text(
-                  animeItem.title.substring(animeItem.animeName.length + 1),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  margin: EdgeInsets.only(left: 2),
+                  padding: const EdgeInsets.all(2),
+                  child: Text(
+                    animeItem.title.substring(animeItem.animeName.length + 1),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ],
