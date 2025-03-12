@@ -19,7 +19,7 @@ class WatchServersCubit extends Cubit<WatchServersStates> {
     var result = await animeRepo.getWatchServers(episodeUrl: episodeUrl);
     result.fold(
         (failure) =>
-            emit(GetWatchServersFailure(errorMessage: failure.errorMessage)),
+            emit(GetWatchServersFailure(errorMessage: failure)),
         (watchServers) =>
             emit(GetWatchServersSuccess(watchServers: watchServers)));
   }

@@ -1,62 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-//
-// class VideoPlayerScreen extends StatefulWidget {
-//   const VideoPlayerScreen({super.key, required this.url});
-//
-//   final String url;
-//
-//   @override
-//   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
-// }
-//
-// class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-//   late final WebViewController controller;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     controller = WebViewController()
-//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-//       ..setNavigationDelegate(
-//         NavigationDelegate(
-//           onProgress: (int progress) {},
-//           onPageStarted: (String url) {},
-//           onPageFinished: (String url) {},
-//           onHttpError: (HttpResponseError error) {},
-//           onWebResourceError: (WebResourceError error) {},
-//           onNavigationRequest: (NavigationRequest request) {
-//             if (request.url.startsWith('https://www.youtube.com/')) {
-//               return NavigationDecision.prevent;
-//             }
-//             return NavigationDecision.navigate;
-//           },
-//         ),
-//       );
-//
-//     // تحميل الرابط بعد إنشاء الـ Controller
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       controller.loadRequest(Uri.parse(widget.url));
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         systemOverlayStyle: SystemUiOverlayStyle(
-//           //statusBarColor: Colors.transparent,
-//           systemNavigationBarIconBrightness: Brightness.dark,
-//         ),
-//       ),
-//       body: WebViewWidget(
-//         controller: controller,
-//       ),
-//     );
-//   }
-// }
-
 import 'package:anime_universe/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -81,23 +22,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.black)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (String url) {
-            print('Loading: $url');
-          },
-          onPageFinished: (String url) {
-            print('Loaded: $url');
-          },
-          onWebResourceError: (WebResourceError error) {
-            print("WebView Error: ${error.description}");
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(widget.videoUrl), headers: {
-        "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-      });
+      ..setNavigationDelegate(NavigationDelegate(
+        onPageStarted: (url) {
+          debugPrint('Started loading: $url');
+        },
+        onPageFinished: (url) {
+          debugPrint('Finished loading: $url');
+        },
+        onWebResourceError: (error) {
+          debugPrint("WebView error: ${error.description}");
+        },
+      ))
+      ..enableZoom(true)
+      ..loadRequest(Uri.parse(widget.videoUrl));
   }
 
   @override
@@ -120,7 +57,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ),
         ),
         backgroundColor: KSecondaryColor,
-        systemOverlayStyle: SystemUiOverlayStyle(),
       ),
       body: WebViewWidget(controller: _controller),
     );

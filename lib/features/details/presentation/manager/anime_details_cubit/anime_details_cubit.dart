@@ -21,7 +21,7 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
     var result = await animeRepo.getAnimeContent(animeId: animeId);
     result.fold(
       (failure) =>
-          emit(GetAnimeContentFailure(errorMessage: failure.errorMessage)),
+          emit(GetAnimeContentFailure(errorMessage: failure)),
       (animeContent) {
         episodes = animeContent.episodes
           ..sort((a, b) {

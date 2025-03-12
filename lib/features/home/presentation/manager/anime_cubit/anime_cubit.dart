@@ -11,7 +11,7 @@ class AnimeCubit extends Cubit<AnimeStates> {
     var result = await animeRepo.getAllAnime();
     result.fold(
         (failure) =>
-            emit(GetAllAnimeFailure(errorMessage: failure.errorMessage)),
+            emit(GetAllAnimeFailure(errorMessage: failure)),
         (allAnimeList) => emit(GetAllAnimeSuccess(allAnimeList: allAnimeList)));
   }
 
@@ -21,7 +21,7 @@ class AnimeCubit extends Cubit<AnimeStates> {
     var result = await animeRepo.searchAnime(animeName: animeName);
     result.fold(
         (failure) =>
-            emit(SearchAnimeFailure(errorMessage: failure.errorMessage)),
+            emit(SearchAnimeFailure(errorMessage: failure)),
         (searchedAnimeList) =>
             emit(SearchAnimeSuccess(searchedAnimeList: searchedAnimeList)));
   }

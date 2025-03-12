@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,10 +19,17 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     return BlocBuilder<AnimeCubit, AnimeStates>(
       builder: (context, state) {
         if (state is GetAllAnimeLoading) {
-          return Center(child: CircularProgressIndicator(color: Colors.white,));
+          return Center(
+              child: CircularProgressIndicator(
+            color: Colors.white,
+          ));
         } else if (state is GetAllAnimeFailure) {
           return Center(
-            child: Text(state.errorMessage,style: TextStyle(color: Colors.white),),
+            child: Text(
+              state.errorMessage,
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
           );
         } else if (state is GetAllAnimeSuccess) {
           List<AllAnime> allAnimeList = state.allAnimeList;

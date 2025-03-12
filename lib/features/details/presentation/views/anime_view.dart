@@ -94,7 +94,11 @@ class _AnimeViewState extends State<AnimeView> {
         builder: (context, state) {
           if (state is GetAnimeContentFailure) {
             return Center(
-              child: Text(state.errorMessage),
+              child: Text(
+                state.errorMessage,
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             );
           } else if (state is GetAnimeContentSuccess) {
             return IndexedStack(

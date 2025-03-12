@@ -4,9 +4,7 @@ import '../../../../video_player_screen.dart';
 
 class WatchServersListItem extends StatelessWidget {
   const WatchServersListItem(
-      {super.key,
-      required this.quality,
-      required this.link});
+      {super.key, required this.quality, required this.link});
 
   final String quality;
   final String link;
@@ -51,11 +49,11 @@ class WatchServersListItem extends StatelessWidget {
               quality,
               style: TextStyle(
                 color: quality == '1080p'
-                    ? Colors.amber
+                    ? Colors.cyan
                     : quality == '720p'
-                        ? Colors.white
+                        ? Colors.greenAccent
                         : quality == '480p'
-                            ? Colors.grey
+                            ? Colors.orangeAccent
                             : Colors.redAccent,
                 fontSize: 18,
               ),

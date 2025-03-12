@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../core/utlis/anime_service.dart';
-import '../../../../core/utlis/failures.dart';
 import '../../data/models/anime_content.dart';
 import '../../data/models/watch_servers.dart';
 
@@ -15,7 +14,7 @@ class AnimeDetailsRepoImp implements AnimeDetailsRepo {
   AnimeDetailsRepoImp({required this.animeService});
 
   @override
-  Future<Either<Failure, AnimeContent>> getAnimeContent(
+  Future<Either<String, AnimeContent>> getAnimeContent(
       {required String animeId}) async {
     try {
       AnimeContent animeContent =
@@ -23,29 +22,70 @@ class AnimeDetailsRepoImp implements AnimeDetailsRepo {
       return right(animeContent);
     } catch (e) {
       if (e is DioException) {
-        log(e.toString());
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        log(e.toString());
-        return left(ServerFailure(errorMessage: e.toString()));
+        if (e.response != null && e.response!.data != null) {
+          var errorData = e.response!.data;
+
+          // التأكد إن البيانات عبارة عن Map<String, dynamic>
+          if (errorData is Map<String, dynamic>) {
+            String errorMessage = '';
+
+            if (errorData.containsKey('error')) {
+              errorMessage += "${errorData['error']}\n";
+            }
+            if (errorData.containsKey('message')) {
+              errorMessage += "${errorData['message']}";
+            }
+
+            return left(errorMessage.trim());
+          }
+
+          // لو البيانات String فقط، رجعها كما هي
+          if (errorData is String) {
+            return left(errorData);
+          }
+        }
       }
+
+      log(e.toString());
+      return left("حدث خطأ غير متوقع");
     }
   }
+
   @override
-  Future<Either<Failure, WatchServers>> getWatchServers(
+  Future<Either<String, WatchServers>> getWatchServers(
       {required String episodeUrl}) async {
     try {
       WatchServers watchServers =
-      await animeService.getWatchServes(episodeUrl: episodeUrl);
+          await animeService.getWatchServes(episodeUrl: episodeUrl);
       return right(watchServers);
     } catch (e) {
       if (e is DioException) {
-        log(e.toString());
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        log(e.toString());
-        return left(ServerFailure(errorMessage: e.toString()));
+        if (e.response != null && e.response!.data != null) {
+          var errorData = e.response!.data;
+
+          // التأكد إن البيانات عبارة عن Map<String, dynamic>
+          if (errorData is Map<String, dynamic>) {
+            String errorMessage = '';
+
+            if (errorData.containsKey('error')) {
+              errorMessage += "${errorData['error']}\n";
+            }
+            if (errorData.containsKey('message')) {
+              errorMessage += "${errorData['message']}";
+            }
+
+            return left(errorMessage.trim());
+          }
+
+          // لو البيانات String فقط، رجعها كما هي
+          if (errorData is String) {
+            return left(errorData);
+          }
+        }
       }
+
+      log(e.toString());
+      return left("حدث خطأ غير متوقع");
     }
   }
 }

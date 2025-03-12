@@ -26,6 +26,7 @@ class WatchServersViewBody extends StatelessWidget {
             child: Text(
               state.errorMessage,
               style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
             ),
           );
         } else {
