@@ -1,11 +1,8 @@
 import 'package:anime_universe/features/details/presentation/widgets/watch_servers_list_item.dart';
 import 'package:flutter/material.dart';
 
-class WatchServersListView extends StatelessWidget {
-  const WatchServersListView(
-      {super.key, required this.link});
-
-
+class WatchServersList extends StatelessWidget {
+  const WatchServersList({super.key, required this.link});
 
   final String link;
 

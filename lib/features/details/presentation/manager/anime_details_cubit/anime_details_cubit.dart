@@ -9,6 +9,7 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
 
   String? animeID;
   List<Episode> episodes = [];
+  List<Map<String, String>> detailsList = [];
 
   Future getAnimeContent({required String animeId}) async {
     // عشان منعملش ال request تاني على الفاضي لو نفس الانمي
@@ -17,24 +18,45 @@ class AnimeDetailsCubit extends Cubit<AnimeDetailsStates> {
     }
     animeID = animeId;
 
+    detailsList = [];
+
     emit(GetAnimeContentLoading());
     var result = await animeRepo.getAnimeContent(animeId: animeId);
     result.fold(
-      (failure) =>
-          emit(GetAnimeContentFailure(errorMessage: failure)),
+      (failure) => emit(GetAnimeContentFailure(errorMessage: failure)),
       (animeContent) {
-        episodes = animeContent.episodes
-          ..sort((a, b) {
-            int numA = int.tryParse(
-                    a.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ??
-                0;
-            int numB = int.tryParse(
-                    b.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ??
-                0;
-            return numA.compareTo(numB);
-          });
+        _fillEpisodes(animeContent);
+        _fillDetailsList(animeContent);
         emit(GetAnimeContentSuccess(animeContent: animeContent));
       },
+    );
+  }
+
+  List<Episode> _fillEpisodes(AnimeContent animeContent) {
+    return episodes = animeContent.episodes
+      ..sort((a, b) {
+        int numA =
+            int.tryParse(a.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ??
+                0;
+        int numB =
+            int.tryParse(b.episodeNumber.replaceAll(RegExp(r'[^0-9]'), '')) ??
+                0;
+        return numA.compareTo(numB);
+      });
+  }
+
+  void _fillDetailsList(AnimeContent animeContent) {
+    return detailsList.addAll(
+      [
+        {'detailKey': 'مدة الحلقة', 'value': animeContent.episodeDuration},
+        {'detailKey': 'الموسم', 'value': animeContent.season},
+        {'detailKey': 'التصنيف', 'value': animeContent.genre},
+        {'detailKey': 'تاريخ العرض', 'value': animeContent.startYear},
+        {
+          'detailKey': 'عدد الحلقات',
+          'value': animeContent.episodeCount.split('/').first.trim(),
+        },
+      ],
     );
   }
 

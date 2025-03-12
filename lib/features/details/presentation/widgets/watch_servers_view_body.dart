@@ -18,7 +18,7 @@ class WatchServersViewBody extends StatelessWidget {
               )
               .toList()[0]
               .url;
-          return WatchServersListView(
+          return WatchServersList(
             link: link,
           );
         } else if (state is GetWatchServersFailure) {
