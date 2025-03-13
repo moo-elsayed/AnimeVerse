@@ -68,6 +68,9 @@ class AnimeRepoImp implements AnimeRepo {
             if (errorData.containsKey('error')) {
               errorMessage += "${errorData['error']}\n";
             }
+            if (errorData.containsKey('detail')) {
+              errorMessage += "${errorData['detail']}\n";
+            }
             if (errorData.containsKey('message')) {
               errorMessage += "${errorData['message']}";
             }
