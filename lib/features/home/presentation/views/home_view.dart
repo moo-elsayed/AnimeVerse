@@ -1,4 +1,6 @@
+import 'package:anime_universe/features/home/presentation/views/search_view.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../../constants.dart';
 import '../widgets/home_view_body.dart';
@@ -32,18 +34,14 @@ class _HomeViewState extends State<HomeView> {
               Icons.search,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.pushTransition(
+                type: PageTransitionType.leftToRight,
+                //duration: Duration(milliseconds: 230),
+                child: SearchView(),
+              );
+            },
           )
-          // Container(
-          //   padding: EdgeInsets.all(10),
-          //   width: MediaQuery.of(context).size.width * .5,
-          //   child: CustomTextFormField(
-          //     controller: searchController,
-          //     prefixIcon: Icon(Icons.search, color: Colors.white,),
-          //     hintText: '',
-          //     labelText: 'search',
-          //   ),
-          // )
         ],
       ),
       body: HomeViewBody(),

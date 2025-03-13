@@ -20,9 +20,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       builder: (context, state) {
         if (state is GetAllAnimeLoading) {
           return Center(
-              child: CircularProgressIndicator(
-            color: Colors.white,
-          ));
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
         } else if (state is GetAllAnimeFailure) {
           return Center(
             child: Text(

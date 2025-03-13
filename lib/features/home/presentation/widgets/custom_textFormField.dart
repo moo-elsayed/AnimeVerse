@@ -6,12 +6,11 @@ class CustomTextFormField extends StatelessWidget {
       required this.controller,
       required this.hintText,
       this.prefixIcon,
-      required this.labelText,
       this.onChanged});
 
   final TextEditingController controller;
   final String hintText;
-  final String labelText;
+
   final Widget? prefixIcon;
   final void Function(String)? onChanged;
 
@@ -29,22 +28,21 @@ class CustomTextFormField extends StatelessWidget {
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        // filled: true,
-        // fillColor: KSecondaryColor,
-        labelText: labelText,
         hintText: hintText,
         prefixIcon: prefixIcon ?? null,
-        border: getBorder(),
-        enabledBorder: getBorder(),
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
         errorBorder: getBorder(color: Colors.red),
-        focusedBorder: getBorder(),
+        focusedBorder: InputBorder.none,
       ),
     );
   }
 
-  OutlineInputBorder getBorder({Color? color}) {
-    return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: color ?? Colors.white));
+  UnderlineInputBorder getBorder({Color? color}) {
+    return UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: color ?? Colors.white,
+      ),
+    );
   }
 }

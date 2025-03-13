@@ -9,7 +9,9 @@ import '../../data/models/search_anime.dart';
 import 'anime_repo.dart';
 
 class AnimeRepoImp implements AnimeRepo {
-  final AnimeService animeService = AnimeService();
+  final AnimeService animeService;
+
+  AnimeRepoImp({required this.animeService});
 
   @override
   Future<Either<String, List<AllAnime>>> getAllAnime() async {
