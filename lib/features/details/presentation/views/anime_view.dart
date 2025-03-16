@@ -3,6 +3,7 @@ import 'package:anime_universe/features/details/presentation/manager/anime_detai
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import '../../../../core/widgets/loading_widget.dart';
 import '../manager/anime_details_cubit/anime_details_states.dart';
 import '../widgets/details_view_body.dart';
 import '../widgets/episodes_view_body.dart';
@@ -115,11 +116,7 @@ class _AnimeViewState extends State<AnimeView> {
               ],
             );
           } else {
-            return Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            );
+            return LoadingWidget();
           }
         },
       ),

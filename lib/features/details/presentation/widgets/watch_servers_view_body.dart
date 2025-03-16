@@ -3,6 +3,7 @@ import 'package:anime_universe/features/details/presentation/widgets/watch_serve
 import 'package:anime_universe/features/details/presentation/widgets/watch_servers_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/widgets/loading_widget.dart';
 import '../manager/watch_servers_cubit/watch_servers_cubit.dart';
 import '../manager/watch_servers_cubit/watch_servers_states.dart';
 
@@ -37,11 +38,7 @@ class WatchServersViewBody extends StatelessWidget {
             ),
           );
         } else {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),
-          );
+          return LoadingWidget();
         }
       },
     );

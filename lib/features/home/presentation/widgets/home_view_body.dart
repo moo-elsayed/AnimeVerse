@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/widgets/loading_widget.dart';
 import '../manager/anime_cubit/anime_cubit.dart';
 import '../manager/anime_cubit/anime_states.dart';
 import 'all_anime_listView.dart';
@@ -12,11 +13,7 @@ class HomeViewBody extends StatelessWidget {
     return BlocBuilder<AnimeCubit, AnimeStates>(
       builder: (context, state) {
         if (state is GetAllAnimeLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),
-          );
+          return LoadingWidget();
         } else if (state is GetAllAnimeFailure) {
           return Center(
             child: Text(
