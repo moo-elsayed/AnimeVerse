@@ -3,7 +3,7 @@ import 'package:anime_universe/features/favorites/data/models/anime_model.dart';
 import '../../data/data_sources/anime_local_data_source.dart';
 import 'favorite_repo.dart';
 
-class favoriteRepoImp implements favoriteRepo {
+class favoriteRepoImp implements FavoriteRepo {
   final AnimeLocalDataSource animeLocalDataSource;
 
   favoriteRepoImp({required this.animeLocalDataSource});

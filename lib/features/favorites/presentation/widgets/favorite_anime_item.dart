@@ -1,17 +1,15 @@
+import 'package:anime_universe/features/favorites/data/models/anime_model.dart';
 import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
-import 'package:anime_universe/features/home/data/models/search_anime.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-
-import '../../../../core/utlis/functions.dart';
 import '../../../details/presentation/views/anime_view.dart';
 
-class SearchAnimeItem extends StatelessWidget {
-  const SearchAnimeItem({super.key, required this.searchAnime});
+class FavoriteAnimeItem extends StatelessWidget {
+  const FavoriteAnimeItem({super.key, required this.animeModel});
 
-  final SearchAnime searchAnime;
+  final AnimeModel animeModel;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +18,13 @@ class SearchAnimeItem extends StatelessWidget {
         context.pushTransition(
           type: PageTransitionType.leftToRight,
           child: AnimeView(
-            image: searchAnime.image,
-            episodes: extractNumber(searchAnime.episodes),
-            animeId: searchAnime.animeId,
-            title: searchAnime.title,
+            image: animeModel.image,
+            episodes: animeModel.episodes,
+            animeId: animeModel.animeId,
+            title: animeModel.title,
             isFavorite: await context
                 .read<FavoriteCubit>()
-                .isFavorite(animeId: searchAnime.animeId),
+                .isFavorite(animeId: animeModel.animeId),
           ),
         );
       },
@@ -43,7 +41,7 @@ class SearchAnimeItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     fit: BoxFit.fill,
-                    imageUrl: searchAnime.image,
+                    imageUrl: animeModel.image,
                     errorWidget: (context, url, error) => Container(
                       color: Colors.grey[600],
                     ),
@@ -60,7 +58,7 @@ class SearchAnimeItem extends StatelessWidget {
                 margin: EdgeInsets.only(left: 2),
                 padding: const EdgeInsets.all(2),
                 child: Text(
-                  searchAnime.episodes.replaceAll('عدد الحلقات', 'Episodes'),
+                  "Episodes ${animeModel.episodes}",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -69,7 +67,7 @@ class SearchAnimeItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
-              searchAnime.title,
+              animeModel.title,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Colors.white,

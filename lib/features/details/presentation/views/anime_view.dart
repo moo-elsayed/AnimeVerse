@@ -3,16 +3,29 @@ import 'package:anime_universe/features/details/presentation/manager/anime_detai
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import '../../../../core/widgets/back_arrow.dart';
+import '../../../../core/widgets/error_widget.dart';
 import '../../../../core/widgets/loading_widget.dart';
+import '../../../favorites/data/models/anime_model.dart';
+import '../../../favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
 import '../manager/anime_details_cubit/anime_details_states.dart';
 import '../widgets/details_view_body.dart';
 import '../widgets/episodes_view_body.dart';
 
 class AnimeView extends StatefulWidget {
-  const AnimeView({super.key, required this.title, required this.animeId});
+  const AnimeView(
+      {super.key,
+      required this.title,
+      required this.animeId,
+      required this.image,
+      required this.episodes,
+      required this.isFavorite});
 
   final String title;
   final String animeId;
+  final String image;
+  final String episodes;
+  final bool isFavorite;
 
   @override
   State<AnimeView> createState() => _AnimeViewState();
@@ -20,11 +33,14 @@ class AnimeView extends StatefulWidget {
 
 class _AnimeViewState extends State<AnimeView> {
   int _currentIndex = 0;
+  late bool r;
 
   @override
   void initState() {
     BlocProvider.of<AnimeDetailsCubit>(context)
         .getAnimeContent(animeId: widget.animeId);
+
+    r = widget.isFavorite;
 
     super.initState();
   }
@@ -40,15 +56,7 @@ class _AnimeViewState extends State<AnimeView> {
     return Scaffold(
       backgroundColor: KMainColor,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
+        leading: BackArrow(),
         title: Text(widget.title),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
         backgroundColor: KSecondaryColor,
@@ -64,9 +72,28 @@ class _AnimeViewState extends State<AnimeView> {
               ]
             : [
                 IconButton(
-                  icon:
-                      Icon(Icons.favorite_border_outlined, color: Colors.white),
-                  onPressed: () {},
+                  icon: Icon(
+                      r == true
+                          ? Icons.favorite
+                          : Icons.favorite_border_outlined,
+                      color: Colors.white),
+                  onPressed: () {
+                    r == true
+                        ? context
+                            .read<FavoriteCubit>()
+                            .removeFavorite(animeId: widget.animeId)
+                        : context.read<FavoriteCubit>().addFavorite(
+                              anime: AnimeModel(
+                                image: widget.image,
+                                animeId: widget.animeId,
+                                title: widget.title,
+                                episodes: widget.episodes,
+                              ),
+                            );
+                    setState(() {
+                      r = !r;
+                    });
+                  },
                 )
               ],
       ),
@@ -100,13 +127,7 @@ class _AnimeViewState extends State<AnimeView> {
       body: BlocBuilder<AnimeDetailsCubit, AnimeDetailsStates>(
         builder: (context, state) {
           if (state is GetAnimeContentFailure) {
-            return Center(
-              child: Text(
-                state.errorMessage,
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            );
+            return CustomErrorWidget(errorMessage: state.errorMessage);
           } else if (state is GetAnimeContentSuccess) {
             return IndexedStack(
               index: _currentIndex,

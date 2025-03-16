@@ -1,3 +1,4 @@
+import 'package:anime_universe/core/widgets/error_widget.dart';
 import 'package:anime_universe/features/home/presentation/widgets/search_anime_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,19 +12,12 @@ class SearchViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AnimeCubit animeCubit = context.read<AnimeCubit>();
     return BlocBuilder<AnimeCubit, AnimeStates>(
       builder: (context, state) {
         if (state is SearchAnimeSuccess) {
           return SearchAnimeListView();
         } else if (state is SearchAnimeFailure) {
-          return Center(
-            child: Text(
-              state.errorMessage,
-              style: TextStyle(color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-          );
+          return CustomErrorWidget(errorMessage: state.errorMessage);
         } else if (state is SearchAnimeLoading) {
           return LoadingWidget();
         } else {

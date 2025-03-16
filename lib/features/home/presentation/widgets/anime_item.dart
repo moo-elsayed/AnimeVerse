@@ -1,10 +1,13 @@
 import 'package:anime_universe/features/details/presentation/views/anime_view.dart';
 import 'package:anime_universe/features/details/presentation/views/watch_servers_view.dart';
+import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/models/server.dart';
+import '../../../../core/utlis/functions.dart';
 import '../../data/models/all_anime.dart';
 
 class AnimeItem extends StatelessWidget {
@@ -15,13 +18,20 @@ class AnimeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        String animeId =
+            animeItem.animeUrl.substring(29, animeItem.animeUrl.length - 1);
+
         context.pushTransition(
           type: PageTransitionType.leftToRight,
           child: AnimeView(
-            animeId:
-                animeItem.animeUrl.substring(29, animeItem.animeUrl.length - 1),
+            image: animeItem.image,
+            animeId: animeId,
             title: animeItem.animeName,
+            episodes: extractNumber(animeItem.episodes[0].episodeNumber),
+            isFavorite: await context
+                .read<FavoriteCubit>()
+                .isFavorite(animeId: animeId),
           ),
         );
       },

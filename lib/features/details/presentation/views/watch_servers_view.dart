@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/models/server.dart';
-import '../widgets/watch_servers_list.dart';
+import '../../../../core/widgets/back_arrow.dart';
 import '../widgets/watch_servers_list_view.dart';
 
 class WatchServersView extends StatefulWidget {
@@ -41,15 +41,7 @@ class _WatchServersViewState extends State<WatchServersView> {
     return Scaffold(
       backgroundColor: KMainColor,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
+        leading: BackArrow(),
         title: Text(
           widget.episodeNumber,
           style: TextStyle(color: Colors.white),

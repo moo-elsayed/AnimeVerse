@@ -5,6 +5,8 @@ import 'package:anime_universe/features/home/presentation/widgets/search_view_bo
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/widgets/back_arrow.dart';
+
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
 
@@ -35,16 +37,7 @@ class _SearchViewState extends State<SearchView> {
     return Scaffold(
       backgroundColor: KMainColor,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            animeCubit.emptySearchList();
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
+        leading: BackArrow(),
         backgroundColor: KSecondaryColor,
         title: CustomTextFormField(
           controller: searchController,
