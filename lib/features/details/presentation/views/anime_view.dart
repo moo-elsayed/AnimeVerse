@@ -61,7 +61,13 @@ class _AnimeViewState extends State<AnimeView> {
                   },
                 )
               ]
-            : [],
+            : [
+                IconButton(
+                  icon:
+                      Icon(Icons.favorite_border_outlined, color: Colors.white),
+                  onPressed: () {},
+                )
+              ],
       ),
       bottomNavigationBar: Container(
         color: KSecondaryColor,

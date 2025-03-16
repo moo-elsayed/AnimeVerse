@@ -1,3 +1,4 @@
+import 'package:anime_universe/features/home/presentation/views/drawer_view.dart';
 import 'package:anime_universe/features/home/presentation/views/search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -19,7 +20,22 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KMainColor,
+      drawer: Drawer(
+        child: DrawerView(),
+        backgroundColor: KMainColor,
+      ),
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) => GestureDetector(
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
+            child: Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+          ),
+        ),
         title: Text(
           'AnimeVerse',
           style: TextStyle(
