@@ -1,4 +1,3 @@
-import 'package:anime_universe/features/home/domain/entities/anime_entity.dart';
 
 import '../../../data/models/all_anime.dart';
 import '../../../data/models/search_anime.dart';
@@ -31,7 +30,7 @@ class GetAllAnimeFailure extends AnimeStates {
 class SearchAnimeLoading extends AnimeStates {}
 
 class SearchAnimeSuccess extends AnimeStates {
-  final List<AnimeEntity> searchedAnimeList;
+  final List<SearchAnime> searchedAnimeList;
 
   SearchAnimeSuccess({required this.searchedAnimeList});
 }

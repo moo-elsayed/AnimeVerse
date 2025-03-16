@@ -1,4 +1,4 @@
-import 'package:anime_universe/features/home/domain/entities/anime_entity.dart';
+import 'package:anime_universe/features/home/data/models/search_anime.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -8,7 +8,7 @@ import '../../../details/presentation/views/anime_view.dart';
 class SearchAnimeItem extends StatelessWidget {
   const SearchAnimeItem({super.key, required this.searchAnime});
 
-  final AnimeEntity searchAnime;
+  final SearchAnime searchAnime;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SearchAnimeItem extends StatelessWidget {
         context.pushTransition(
           type: PageTransitionType.leftToRight,
           child: AnimeView(
-            animeId: searchAnime.animeUrl,
+            animeId: searchAnime.animeId,
             title: searchAnime.title,
           ),
         );

@@ -1,4 +1,3 @@
-import 'package:anime_universe/features/home/domain/entities/anime_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/all_anime.dart';
 import '../../../data/models/search_anime.dart';
@@ -11,7 +10,7 @@ class AnimeCubit extends Cubit<AnimeStates> {
 
   List<AllAnime> allAnimeList = [];
   String? searchString;
-  List<AnimeEntity> searchList = [];
+  List<SearchAnime> searchList = [];
 
   Future searchAnime({required String animeName}) async {
     // عشان منعملش ال request تاني على الفاضي لو نفس الانمي

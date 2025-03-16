@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:anime_universe/core/utlis/anime_service.dart';
-import 'package:anime_universe/features/home/domain/entities/anime_entity.dart';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -51,10 +50,10 @@ class AnimeRepoImp implements AnimeRepo {
   }
 
   @override
-  Future<Either<String, List<AnimeEntity>>> searchAnime(
+  Future<Either<String, List<SearchAnime>>> searchAnime(
       {required String animeName}) async {
     try {
-      List<AnimeEntity> searchAnime =
+      List<SearchAnime> searchAnime =
           await animeService.searchAnime(animeName: animeName);
       return right(searchAnime);
     } catch (e) {
