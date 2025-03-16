@@ -9,9 +9,11 @@ flutter_native_splash:
   #  android_gravity: center  # يضمن وضع الصورة في المنتصف
   #  full_screen: true
 
+
   android_12:
-    image: assets/app_icon.jpg  # استبدله بالصورة الخاصة بك
+    image: assets/splash_icon.jpg  # استبدله بالصورة الخاصة بك
     color: "#182128"  # لون الخلفية
     icon_background_color: "#182128"  # يساعد في تقليل التأثير إذا كان هناك قص للصورة
+    branding: "assets/branding_image.jpg"
 
 
