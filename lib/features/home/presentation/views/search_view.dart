@@ -1,6 +1,5 @@
 import 'package:anime_universe/constants.dart';
 import 'package:anime_universe/features/home/presentation/manager/anime_cubit/anime_cubit.dart';
-import 'package:anime_universe/features/home/presentation/manager/search_cubit/search_cubit.dart';
 import 'package:anime_universe/features/home/presentation/widgets/custom_textFormField.dart';
 import 'package:anime_universe/features/home/presentation/widgets/search_view_body.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,14 @@ class _SearchViewState extends State<SearchView> {
   TextEditingController searchController = TextEditingController();
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AnimeCubit>().emptySearchList();
+    });
+    super.initState();
+  }
+
+  @override
   void dispose() {
     searchController.dispose();
     super.dispose();
@@ -24,13 +31,13 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
-    SearchCubit searchCubit = BlocProvider.of<SearchCubit>(context);
+    AnimeCubit animeCubit = context.read<AnimeCubit>();
     return Scaffold(
       backgroundColor: KMainColor,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            searchCubit.emptySearchList();
+            animeCubit.emptySearchList();
             Navigator.pop(context);
           },
           child: Icon(
@@ -47,7 +54,7 @@ class _SearchViewState extends State<SearchView> {
           TextButton(
             onPressed: () {
               if (searchController.text.isNotEmpty) {
-                searchCubit.searchAnime(animeName: searchController.text);
+                animeCubit.searchAnime(animeName: searchController.text.trim());
               }
             },
             child: Text(

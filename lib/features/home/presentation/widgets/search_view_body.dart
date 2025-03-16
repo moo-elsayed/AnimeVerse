@@ -1,16 +1,17 @@
-import 'package:anime_universe/features/home/presentation/manager/search_cubit/search_cubit.dart';
-import 'package:anime_universe/features/home/presentation/widgets/empty_search_widget.dart';
 import 'package:anime_universe/features/home/presentation/widgets/search_anime_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../manager/search_cubit/search_states.dart';
+import '../manager/anime_cubit/anime_cubit.dart';
+import '../manager/anime_cubit/anime_states.dart';
+import 'empty_search_widget.dart';
 
 class SearchViewBody extends StatelessWidget {
   const SearchViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchCubit, SearchStates>(
+    AnimeCubit animeCubit = context.read<AnimeCubit>();
+    return BlocBuilder<AnimeCubit, AnimeStates>(
       builder: (context, state) {
         if (state is SearchAnimeSuccess) {
           return SearchAnimeListView();

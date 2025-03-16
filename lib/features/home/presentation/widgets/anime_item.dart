@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../../core/models/server.dart';
 import '../../data/models/all_anime.dart';
 
 class AnimeItem extends StatelessWidget {
@@ -46,16 +47,22 @@ class AnimeItem extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                  String? link;
+                  for (Server server in animeItem.episodes[0].servers) {
+                    if (server.name.contains('megamax me')) {
+                      link = server.url;
+                      animeItem.episodes[0].servers.remove(server);
+                      break;
+                    }
+                  }
+
                   context.pushTransition(
                     type: PageTransitionType.leftToRight,
                     //duration: Duration(milliseconds: 230),
                     child: WatchServersView(
+                      servers: animeItem.episodes[0].servers,
                       episodeNumber: animeItem.episodes[0].episodeNumber,
-                      link: animeItem.episodes[0].servers
-                          .where(
-                              (element) => element.name.contains('megamax me'))
-                          .toList()[0]
-                          .url,
+                      link: link,
                     ),
                   );
                 },

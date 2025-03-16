@@ -1,7 +1,6 @@
 import 'package:anime_universe/core/utlis/anime_service.dart';
 import 'package:anime_universe/features/details/domain/repos/anime_details_repo_imp.dart';
 import 'package:anime_universe/features/details/presentation/manager/watch_servers_cubit/watch_servers_cubit.dart';
-import 'package:anime_universe/features/home/presentation/manager/search_cubit/search_cubit.dart';
 import 'package:anime_universe/simple_bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,10 +34,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => WatchServersCubit(
               AnimeDetailsRepoImp(animeService: AnimeService())),
-        ),
-        BlocProvider(
-          create: (context) =>
-              SearchCubit(AnimeRepoImp(animeService: AnimeService())),
         ),
       ],
       child: MaterialApp(

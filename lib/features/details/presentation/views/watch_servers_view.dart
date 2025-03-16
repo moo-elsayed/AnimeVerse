@@ -1,17 +1,24 @@
 import 'package:anime_universe/constants.dart';
 import 'package:anime_universe/features/details/presentation/manager/watch_servers_cubit/watch_servers_cubit.dart';
-import 'package:anime_universe/features/details/presentation/widgets/watch_servers_list_view.dart';
 import 'package:anime_universe/features/details/presentation/widgets/watch_servers_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/models/server.dart';
+import '../widgets/watch_servers_list.dart';
+import '../widgets/watch_servers_list_view.dart';
+
 class WatchServersView extends StatefulWidget {
   const WatchServersView(
-      {super.key, this.episodeUrl, required this.episodeNumber, this.link});
+      {super.key,
+      this.episodeUrl,
+      required this.episodeNumber,
+      this.link,
+      this.servers});
 
   final String? episodeUrl;
   final String episodeNumber;
-
+  final List<Server>? servers;
   final String? link;
 
   @override
@@ -50,7 +57,11 @@ class _WatchServersViewState extends State<WatchServersView> {
         backgroundColor: KSecondaryColor,
       ),
       body: widget.episodeUrl == null
-          ? WatchServersList(link: widget.link!)
+          ? WatchServersListView(
+              servers: widget.servers!,
+              fromHome: true,
+              link: widget.link,
+            )
           : WatchServersViewBody(),
     );
   }

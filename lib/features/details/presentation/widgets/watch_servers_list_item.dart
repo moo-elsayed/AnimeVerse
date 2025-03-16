@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../../../constants.dart';
+import '../../../../core/models/server.dart';
 import '../../../../video_player_screen.dart';
 
 class WatchServersListItem extends StatelessWidget {
   const WatchServersListItem(
-      {super.key, required this.quality, required this.link});
+      {super.key, required this.server, required this.fromHome});
 
-  final String quality;
-  final String link;
+  final Server server;
+  final bool fromHome;
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +17,10 @@ class WatchServersListItem extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => VideoPlayerScreen(
-              videoUrl: link,
+              videoUrl: server.url,
             ),
           ),
         );
-
-        // context.pushTransition(
-        //   type: PageTransitionType.leftToRight,
-        //   duration: Duration(milliseconds: 300),
-        //   child: VideoPlayerScreen(
-        //     videoUrl: link,
-        //   ),
-        // );
       },
       child: Container(
         padding: EdgeInsets.all(16),
@@ -41,24 +34,55 @@ class WatchServersListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'megamax me',
+              fromHome == true
+                  ? server.quality == 'FHD'
+                      ? server.name.substring(3)
+                      : server.name.substring(2)
+                  : server.name,
               style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.right,
+              //textAlign: TextAlign.right,
             ),
-            Text(
-              quality,
-              style: TextStyle(
-                color: quality == '1080p'
-                    ? Colors.cyan
-                    : quality == '720p'
-                        ? Colors.greenAccent
-                        : quality == '480p'
-                            ? Colors.orangeAccent
-                            : Colors.redAccent,
-                fontSize: 18,
-              ),
-              textAlign: TextAlign.right,
-            ),
+            server.name == 'megamax me'
+                ? Row(
+                    spacing: 8,
+                    children: [
+                      Text(
+                        'FHD',
+                        style: TextStyle(
+                          color: Colors.cyan,
+                          fontSize: 18,
+                        ),
+                      ),
+                      Text(
+                        'HD',
+                        style: TextStyle(
+                          color: Colors.greenAccent,
+                          fontSize: 18,
+                        ),
+                      ),
+                      Text(
+                        'SD',
+                        style: TextStyle(
+                          color: Colors.orangeAccent,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    server.quality,
+                    style: TextStyle(
+                      color: server.quality == 'FHD'
+                          ? Colors.cyan
+                          : server.quality == 'HD'
+                              ? Colors.greenAccent
+                              : server.quality == 'SD'
+                                  ? Colors.orangeAccent
+                                  : Colors.redAccent,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
           ],
         ),
       ),

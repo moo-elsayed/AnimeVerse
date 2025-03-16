@@ -4,6 +4,7 @@ import '../../../data/models/search_anime.dart';
 abstract class AnimeStates {}
 
 class AnimeInitial extends AnimeStates {}
+class SearchInitial extends AnimeStates {}
 
 //-----------------------------------
 
@@ -23,4 +24,19 @@ class GetAllAnimeFailure extends AnimeStates {
 
 //-----------------------------------
 
+//-----------------------------------
 
+class SearchAnimeLoading extends AnimeStates {}
+
+class SearchAnimeSuccess extends AnimeStates {
+  final List<SearchAnime> searchedAnimeList;
+
+  SearchAnimeSuccess({required this.searchedAnimeList});
+}
+
+class SearchAnimeFailure extends AnimeStates {
+  final String errorMessage;
+
+  SearchAnimeFailure({required this.errorMessage});
+}
+//-----------------------------------

@@ -1,5 +1,5 @@
 import 'package:anime_universe/features/home/data/models/search_anime.dart';
-import 'package:anime_universe/features/home/presentation/manager/search_cubit/search_cubit.dart';
+import 'package:anime_universe/features/home/presentation/manager/anime_cubit/anime_cubit.dart';
 import 'package:anime_universe/features/home/presentation/widgets/search_anime_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ class SearchAnimeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<SearchAnime> searchAnimeList =
-        BlocProvider.of<SearchCubit>(context).searchList;
+        BlocProvider.of<AnimeCubit>(context).searchList;
     return GridView.builder(
       padding: EdgeInsets.all(5),
       itemCount: searchAnimeList.length,
