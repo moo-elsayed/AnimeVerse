@@ -20,13 +20,15 @@ class AnimeView extends StatefulWidget {
       required this.animeId,
       required this.image,
       required this.episodes,
-      required this.isFavorite});
+      required this.isFavorite,
+      required this.isWatchingNow});
 
   final String title;
   final String animeId;
   final String image;
   final String episodes;
   final bool isFavorite;
+  final bool isWatchingNow;
 
   @override
   State<AnimeView> createState() => _AnimeViewState();
@@ -34,14 +36,16 @@ class AnimeView extends StatefulWidget {
 
 class _AnimeViewState extends State<AnimeView> {
   int _currentIndex = 0;
-  late bool r;
+  late bool favorite;
+  late bool watchingNow;
 
   @override
   void initState() {
     BlocProvider.of<AnimeDetailsCubit>(context)
         .getAnimeContent(animeId: widget.animeId);
 
-    r = widget.isFavorite;
+    favorite = widget.isFavorite;
+    watchingNow = widget.isWatchingNow;
 
     super.initState();
   }
@@ -73,24 +77,43 @@ class _AnimeViewState extends State<AnimeView> {
               ]
             : [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    watchingNow == true
+                        ? context
+                            .read<CollectionCubit>()
+                            .removeWatchingAnime(animeId: widget.animeId)
+                        : context.read<CollectionCubit>().insertAnime(
+                              anime: AnimeModel(
+                                image: widget.image,
+                                animeId: widget.animeId,
+                                title: widget.title,
+                                episodes: widget.episodes,
+                              ),
+                              status: 'watching',
+                            );
+                    setState(() {
+                      watchingNow = !watchingNow;
+                    });
+                  },
                   icon: Icon(
-                    Icons.play_circle_outlined,
+                    watchingNow == true
+                        ? Icons.play_circle
+                        : Icons.play_circle_outlined,
                     color: Colors.white,
                   ),
                 ),
                 IconButton(
                   icon: Icon(
-                      r == true
+                      favorite == true
                           ? Icons.favorite
                           : Icons.favorite_border_outlined,
                       color: Colors.white),
                   onPressed: () {
-                    r == true
+                    favorite == true
                         ? context
                             .read<CollectionCubit>()
-                            .removeFavorite(animeId: widget.animeId)
-                        : context.read<CollectionCubit>().addFavorite(
+                            .removeFavoriteAnime(animeId: widget.animeId)
+                        : context.read<CollectionCubit>().insertAnime(
                               anime: AnimeModel(
                                 image: widget.image,
                                 animeId: widget.animeId,
@@ -99,10 +122,8 @@ class _AnimeViewState extends State<AnimeView> {
                               ),
                               status: 'favorite',
                             );
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Hello')));
                     setState(() {
-                      r = !r;
+                      favorite = !favorite;
                     });
                   },
                 )

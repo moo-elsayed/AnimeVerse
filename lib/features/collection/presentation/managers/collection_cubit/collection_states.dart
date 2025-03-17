@@ -4,14 +4,14 @@ class FavoriteInitial extends CollectionStates {}
 
 // ==========================
 
-class AddFavoriteLoading extends CollectionStates {}
+class InsertAnimeLoading extends CollectionStates {}
 
-class AddFavoriteSuccess extends CollectionStates {}
+class InsertAnimeSuccess extends CollectionStates {}
 
-class AddFavoriteFailure extends CollectionStates {
+class InsertAnimeFailure extends CollectionStates {
   final String errorMessage;
 
-  AddFavoriteFailure({required this.errorMessage});
+  InsertAnimeFailure({required this.errorMessage});
 }
 
 // ==========================
@@ -77,6 +77,20 @@ class GetWatchingFailure extends CollectionStates {
   final String errorMessage;
 
   GetWatchingFailure({required this.errorMessage});
+}
+
+// ==========================
+
+// ==========================
+
+class RemoveWatchingLoading extends CollectionStates {}
+
+class RemoveWatchingSuccess extends CollectionStates {}
+
+class RemoveWatchingFailure extends CollectionStates {
+  final String errorMessage;
+
+  RemoveWatchingFailure({required this.errorMessage});
 }
 
 // ==========================

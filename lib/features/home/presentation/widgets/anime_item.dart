@@ -32,6 +32,9 @@ class AnimeItem extends StatelessWidget {
             isFavorite: await context
                 .read<CollectionCubit>()
                 .isFavorite(animeId: animeId),
+            isWatchingNow: await context
+                .read<CollectionCubit>()
+                .isWatchingNow(animeId: animeId),
           ),
         );
       },

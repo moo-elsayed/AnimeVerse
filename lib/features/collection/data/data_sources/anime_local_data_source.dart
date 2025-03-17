@@ -17,22 +17,38 @@ class AnimeLocalDataSource {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 4, // زود رقم النسخة لتفعيل التحديث
       onCreate: (db, version) async {
         await db.execute('''
-    CREATE TABLE favorites (
-      anime_id TEXT PRIMARY KEY,
-      title TEXT,
-      image TEXT,
-      episodes TEXT,
-      status TEXT  
-    )
-  ''');
+        CREATE TABLE AnimeCollection (
+          anime_id TEXT,
+          title TEXT,
+          image TEXT,
+          episodes TEXT,
+          status TEXT,
+          PRIMARY KEY (anime_id, status) -- مفتاح مركب لمنع تكرار نفس الانمي في نفس القائمة
+        )
+      ''');
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) {
-          await db.execute(
-              'ALTER TABLE favorites ADD COLUMN status TEXT DEFAULT "favorite"');
+        if (oldVersion < 4) {
+          await db
+              .execute('ALTER TABLE AnimeCollection RENAME TO temp_old_table');
+          await db.execute('''
+          CREATE TABLE AnimeCollection (
+            anime_id TEXT,
+            title TEXT,
+            image TEXT,
+            episodes TEXT,
+            status TEXT,
+            PRIMARY KEY (anime_id, status)
+          )
+        ''');
+          await db.execute('''
+          INSERT INTO AnimeCollection (anime_id, title, image, episodes, status)
+          SELECT anime_id, title, image, episodes, status FROM temp_old_table
+        ''');
+          await db.execute('DROP TABLE temp_old_table');
         }
       },
     );
@@ -42,24 +58,38 @@ class AnimeLocalDataSource {
       {required AnimeModel anime, required String status}) async {
     Database db = await getDatabase();
     await db.insert(
-      'favorites',
+      'AnimeCollection',
       {
         ...anime.toJson(),
         "status": status,
       },
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: ConflictAlgorithm
+          .replace, // سيحذف العنصر القديم لنفس الحالة ويضيف الجديد
     );
   }
 
-  Future<void> deleteAnime({required String animeId}) async {
+  Future<void> removeFavoriteAnime({required String animeId}) async {
     Database db = await getDatabase();
-    await db.delete('favorites', where: 'anime_id = ?', whereArgs: [animeId]);
+    await db.delete(
+      'AnimeCollection',
+      where: 'anime_id = ? AND status = ?',
+      whereArgs: [animeId, 'favorite'],
+    );
+  }
+
+  Future<void> removeWatchingAnime({required String animeId}) async {
+    Database db = await getDatabase();
+    await db.delete(
+      'AnimeCollection',
+      where: 'anime_id = ? AND status = ?',
+      whereArgs: [animeId, 'watching'],
+    );
   }
 
   Future<List<AnimeModel>> getFavorites() async {
     Database db = await getDatabase();
     final List<Map<String, dynamic>> maps = await db.query(
-      'favorites',
+      'AnimeCollection',
       where: 'status = ?',
       whereArgs: ['favorite'],
     );
@@ -70,7 +100,7 @@ class AnimeLocalDataSource {
   Future<List<AnimeModel>> getWatching() async {
     Database db = await getDatabase();
     final List<Map<String, dynamic>> maps = await db.query(
-      'favorites',
+      'AnimeCollection',
       where: 'status = ?',
       whereArgs: ['watching'],
     );
@@ -78,20 +108,23 @@ class AnimeLocalDataSource {
     return List.generate(maps.length, (i) => AnimeModel.fromJson(maps[i]));
   }
 
-  Future<bool> isFavorite({required String animeId}) async {
+  Future<bool> isWatchingNow({required String animeId}) async {
     Database db = await getDatabase();
-    final List<Map<String, dynamic>> maps = await db
-        .query('favorites', where: 'anime_id = ?', whereArgs: [animeId]);
+    final List<Map<String, dynamic>> maps = await db.query(
+      'AnimeCollection',
+      where: 'anime_id = ? AND status = ?',
+      whereArgs: [animeId, 'watching'], // التأكد من الحالة أيضًا
+    );
 
     return maps.isNotEmpty;
   }
 
-  Future<bool> isWatchingNow({required String animeId}) async {
+  Future<bool> isFavorite({required String animeId}) async {
     Database db = await getDatabase();
     final List<Map<String, dynamic>> maps = await db.query(
-      'favorites',
+      'AnimeCollection',
       where: 'anime_id = ? AND status = ?',
-      whereArgs: [animeId, 'watching'],
+      whereArgs: [animeId, 'favorite'], // التأكد من الحالة أيضًا
     );
 
     return maps.isNotEmpty;

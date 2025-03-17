@@ -6,8 +6,8 @@ import '../../../details/presentation/views/anime_view.dart';
 import '../../data/models/anime_model.dart';
 import '../managers/collection_cubit/collection_cubit.dart';
 
-class FavoriteAnimeItem extends StatelessWidget {
-  const FavoriteAnimeItem({super.key, required this.animeModel});
+class AnimeCollectionItem extends StatelessWidget {
+  const AnimeCollectionItem({super.key, required this.animeModel});
 
   final AnimeModel animeModel;
 
@@ -25,6 +25,9 @@ class FavoriteAnimeItem extends StatelessWidget {
             isFavorite: await context
                 .read<CollectionCubit>()
                 .isFavorite(animeId: animeModel.animeId),
+            isWatchingNow: await context
+                .read<CollectionCubit>()
+                .isWatchingNow(animeId: animeModel.animeId),
           ),
         );
       },

@@ -1,4 +1,5 @@
 import 'package:anime_universe/constants.dart';
+import 'package:anime_universe/features/collection/presentation/views/watching_now_view.dart';
 import 'package:anime_universe/features/collection/presentation/widgets/drawer_item.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -34,7 +35,13 @@ class DrawerView extends StatelessWidget {
               },
             ),
             DrawerItem(
-              onTap: () {},
+              onTap: () {
+                context.pushTransition(
+                  type: PageTransitionType.leftToRight,
+                  //duration: Duration(milliseconds: 230),
+                  child: WatchingNowView(),
+                );
+              },
               title: 'Watching now',
               iconData: Icons.play_circle,
             ),

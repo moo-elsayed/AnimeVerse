@@ -27,6 +27,9 @@ class SearchAnimeItem extends StatelessWidget {
             isFavorite: await context
                 .read<CollectionCubit>()
                 .isFavorite(animeId: searchAnime.animeId),
+            isWatchingNow: await context
+                .read<CollectionCubit>()
+                .isWatchingNow(animeId: searchAnime.animeId),
           ),
         );
       },

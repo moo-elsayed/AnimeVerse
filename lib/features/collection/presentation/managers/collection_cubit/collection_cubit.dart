@@ -15,14 +15,14 @@ class CollectionCubit extends Cubit<CollectionStates> {
 
   //bool? isMyFavorite;
 
-  Future<void> addFavorite(
+  Future<void> insertAnime(
       {required AnimeModel anime, required String status}) async {
-    emit(AddFavoriteLoading());
+    emit(InsertAnimeLoading());
     try {
       await collectionRepo.insertAnime(anime: anime, status: status);
-      emit(AddFavoriteSuccess());
+      emit(InsertAnimeSuccess());
     } catch (e) {
-      emit(AddFavoriteFailure(errorMessage: e.toString()));
+      emit(InsertAnimeFailure(errorMessage: e.toString()));
     }
   }
 
@@ -49,10 +49,10 @@ class CollectionCubit extends Cubit<CollectionStates> {
     }
   }
 
-  Future<void> removeFavorite({required String animeId}) async {
+  Future<void> removeFavoriteAnime({required String animeId}) async {
     emit(RemoveFavoriteLoading());
     try {
-      await collectionRepo.removeFavorite(animeId: animeId);
+      await collectionRepo.removeFavoriteAnime(animeId: animeId);
       favoritesList.removeWhere(
         (element) => element.animeId == animeId,
       );
@@ -65,7 +65,7 @@ class CollectionCubit extends Cubit<CollectionStates> {
   Future<bool> isWatchingNow({required String animeId}) async {
     emit(IsWatchingNowLoading());
     try {
-      bool temp = await collectionRepo.isFavorite(animeId: animeId);
+      bool temp = await collectionRepo.isWatchingNow(animeId: animeId);
       log(temp.toString());
       emit(IsWatchingNowSuccess());
       return temp;
@@ -83,5 +83,19 @@ class CollectionCubit extends Cubit<CollectionStates> {
     } catch (e) {
       emit(GetWatchingFailure(errorMessage: e.toString()));
     }
+  }
+
+  Future<void> removeWatchingAnime({required String animeId}) async {
+    emit(RemoveWatchingLoading());
+    try {
+      await collectionRepo.removeWatchingAnime(animeId: animeId);
+      watchingList.removeWhere(
+        (element) => element.animeId == animeId,
+      );
+      emit(RemoveWatchingSuccess());
+    } catch (e) {
+      emit(RemoveWatchingFailure(errorMessage: e.toString()));
+    }
+    //await animeLocalDataSource.removeWatchingNow(animeId: animeId);
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:anime_universe/core/widgets/error_widget.dart';
 import 'package:anime_universe/core/widgets/no_results_widget.dart';
 import 'package:anime_universe/features/home/presentation/widgets/search_anime_list_view.dart';

@@ -1,4 +1,3 @@
-
 import '../../data/data_sources/anime_local_data_source.dart';
 import '../../data/models/anime_model.dart';
 import 'collection_repo.dart';
@@ -30,12 +29,17 @@ class CollectionRepoImp implements CollectionRepo {
   }
 
   @override
-  Future<void> removeFavorite({required String animeId}) async {
-    await animeLocalDataSource.deleteAnime(animeId: animeId);
+  Future<void> removeFavoriteAnime({required String animeId}) async {
+    await animeLocalDataSource.removeFavoriteAnime(animeId: animeId);
   }
 
   @override
   Future<bool> isWatchingNow({required String animeId}) async {
     return await animeLocalDataSource.isWatchingNow(animeId: animeId);
+  }
+
+  @override
+  Future<void> removeWatchingAnime({required String animeId}) async {
+    await animeLocalDataSource.removeWatchingAnime(animeId: animeId);
   }
 }

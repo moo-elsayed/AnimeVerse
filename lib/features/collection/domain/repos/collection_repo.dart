@@ -3,7 +3,7 @@ import '../../data/models/anime_model.dart';
 abstract class CollectionRepo {
   Future<void> insertAnime({required AnimeModel anime, required String status});
 
-  Future<void> removeFavorite({required String animeId});
+  Future<void> removeFavoriteAnime({required String animeId});
 
   Future<List<AnimeModel>> getFavorites();
 
@@ -12,4 +12,6 @@ abstract class CollectionRepo {
   Future<bool> isFavorite({required String animeId});
 
   Future<bool> isWatchingNow({required String animeId});
+
+  Future<void> removeWatchingAnime({required String animeId});
 }
