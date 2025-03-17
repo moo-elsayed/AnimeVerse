@@ -1,4 +1,3 @@
-import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
 import 'package:anime_universe/features/home/data/models/search_anime.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/utlis/functions.dart';
+import '../../../collection/presentation/managers/collection_cubit/collection_cubit.dart';
 import '../../../details/presentation/views/anime_view.dart';
 
 class SearchAnimeItem extends StatelessWidget {
@@ -25,7 +25,7 @@ class SearchAnimeItem extends StatelessWidget {
             animeId: searchAnime.animeId,
             title: searchAnime.title,
             isFavorite: await context
-                .read<FavoriteCubit>()
+                .read<CollectionCubit>()
                 .isFavorite(animeId: searchAnime.animeId),
           ),
         );

@@ -1,6 +1,5 @@
 import 'package:anime_universe/features/details/presentation/views/anime_view.dart';
 import 'package:anime_universe/features/details/presentation/views/watch_servers_view.dart';
-import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/models/server.dart';
 import '../../../../core/utlis/functions.dart';
+import '../../../collection/presentation/managers/collection_cubit/collection_cubit.dart';
 import '../../data/models/all_anime.dart';
 
 class AnimeItem extends StatelessWidget {
@@ -30,7 +30,7 @@ class AnimeItem extends StatelessWidget {
             title: animeItem.animeName,
             episodes: extractNumber(animeItem.episodes[0].episodeNumber),
             isFavorite: await context
-                .read<FavoriteCubit>()
+                .read<CollectionCubit>()
                 .isFavorite(animeId: animeId),
           ),
         );

@@ -1,10 +1,11 @@
 import 'package:anime_universe/constants.dart';
-import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
-import 'package:anime_universe/features/favorites/presentation/widgets/favorites_view_body.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/back_arrow.dart';
+import '../managers/collection_cubit/collection_cubit.dart';
+import '../widgets/favorites_view_body.dart';
 
 class FavoritesView extends StatefulWidget {
   const FavoritesView({super.key});
@@ -16,7 +17,7 @@ class FavoritesView extends StatefulWidget {
 class _FavoritesViewState extends State<FavoritesView> {
   @override
   void initState() {
-    context.read<FavoriteCubit>().getFavorites();
+    context.read<CollectionCubit>().getFavorites();
     super.initState();
   }
 
@@ -27,7 +28,10 @@ class _FavoritesViewState extends State<FavoritesView> {
       appBar: AppBar(
         leading: BackArrow(),
         backgroundColor: KSecondaryColor,
-        title: Text('Favorites',style: TextStyle(color: Colors.white),),
+        title: Text(
+          'Favorites',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: FavoritesViewBody(),
     );

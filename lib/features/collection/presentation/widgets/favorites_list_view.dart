@@ -1,15 +1,17 @@
-import 'package:anime_universe/features/favorites/data/models/anime_model.dart';
-import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
-import 'package:anime_universe/features/favorites/presentation/widgets/favorite_anime_item.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/models/anime_model.dart';
+import '../managers/collection_cubit/collection_cubit.dart';
+import 'favorite_anime_item.dart';
 
 class FavoritesAnimeListView extends StatelessWidget {
   const FavoritesAnimeListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<AnimeModel> favorites = context.read<FavoriteCubit>().favoritesList;
+    List<AnimeModel> favorites = context.read<CollectionCubit>().favoritesList;
     return GridView.builder(
       padding: EdgeInsets.all(5),
       itemCount: favorites.length,

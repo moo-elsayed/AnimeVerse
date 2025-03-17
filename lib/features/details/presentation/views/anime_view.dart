@@ -6,8 +6,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../../../core/widgets/back_arrow.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../../../../core/widgets/loading_widget.dart';
-import '../../../favorites/data/models/anime_model.dart';
-import '../../../favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
+
+import '../../../collection/data/models/anime_model.dart';
+import '../../../collection/presentation/managers/collection_cubit/collection_cubit.dart';
 import '../manager/anime_details_cubit/anime_details_states.dart';
 import '../widgets/details_view_body.dart';
 import '../widgets/episodes_view_body.dart';
@@ -72,6 +73,13 @@ class _AnimeViewState extends State<AnimeView> {
               ]
             : [
                 IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.play_circle_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
                   icon: Icon(
                       r == true
                           ? Icons.favorite
@@ -80,16 +88,19 @@ class _AnimeViewState extends State<AnimeView> {
                   onPressed: () {
                     r == true
                         ? context
-                            .read<FavoriteCubit>()
+                            .read<CollectionCubit>()
                             .removeFavorite(animeId: widget.animeId)
-                        : context.read<FavoriteCubit>().addFavorite(
+                        : context.read<CollectionCubit>().addFavorite(
                               anime: AnimeModel(
                                 image: widget.image,
                                 animeId: widget.animeId,
                                 title: widget.title,
                                 episodes: widget.episodes,
                               ),
+                              status: 'favorite',
                             );
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('Hello')));
                     setState(() {
                       r = !r;
                     });

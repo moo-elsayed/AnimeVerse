@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:anime_universe/core/widgets/error_widget.dart';
+import 'package:anime_universe/core/widgets/no_results_widget.dart';
 import 'package:anime_universe/features/home/presentation/widgets/search_anime_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +20,13 @@ class SearchViewBody extends StatelessWidget {
         if (state is SearchAnimeSuccess) {
           return SearchAnimeListView();
         } else if (state is SearchAnimeFailure) {
-          return CustomErrorWidget(errorMessage: state.errorMessage);
+          log(state.errorMessage);
+          if (state.errorMessage ==
+              'An error occurred: 404: No results found') {
+            return NoResultsWidget();
+          } else {
+            return CustomErrorWidget(errorMessage: state.errorMessage);
+          }
         } else if (state is SearchAnimeLoading) {
           return LoadingWidget();
         } else {

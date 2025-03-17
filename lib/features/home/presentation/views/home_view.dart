@@ -1,9 +1,9 @@
-import 'package:anime_universe/features/favorites/presentation/views/drawer_view.dart';
 import 'package:anime_universe/features/home/presentation/views/search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../constants.dart';
+import '../../../collection/presentation/views/drawer_view.dart';
 import '../widgets/home_view_body.dart';
 
 class HomeView extends StatefulWidget {

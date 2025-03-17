@@ -1,10 +1,10 @@
-import 'package:anime_universe/features/favorites/data/models/anime_model.dart';
-import 'package:anime_universe/features/favorites/presentation/managers/favorite_cubit/favorite_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../details/presentation/views/anime_view.dart';
+import '../../data/models/anime_model.dart';
+import '../managers/collection_cubit/collection_cubit.dart';
 
 class FavoriteAnimeItem extends StatelessWidget {
   const FavoriteAnimeItem({super.key, required this.animeModel});
@@ -23,7 +23,7 @@ class FavoriteAnimeItem extends StatelessWidget {
             animeId: animeModel.animeId,
             title: animeModel.title,
             isFavorite: await context
-                .read<FavoriteCubit>()
+                .read<CollectionCubit>()
                 .isFavorite(animeId: animeModel.animeId),
           ),
         );
