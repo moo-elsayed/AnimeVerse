@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => WatchServersCubit(
-              AnimeDetailsRepoImp(animeService: AnimeService())),
-        ),
+              AnimeDetailsRepoImp(animeService: AnimeService())),        ),
         BlocProvider(
           create: (context) => CollectionCubit(
             CollectionRepoImp(

@@ -96,6 +96,5 @@ class CollectionCubit extends Cubit<CollectionStates> {
     } catch (e) {
       emit(RemoveWatchingFailure(errorMessage: e.toString()));
     }
-    //await animeLocalDataSource.removeWatchingNow(animeId: animeId);
   }
 }
