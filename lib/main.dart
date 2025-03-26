@@ -12,7 +12,7 @@ import 'features/home/domain/repos/anime_repo_imp.dart';
 import 'features/home/presentation/manager/anime_cubit/anime_cubit.dart';
 import 'features/home/presentation/views/home_view.dart';
 
-void main() {
+void main() async {
   Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               AnimeCubit(AnimeRepoImp(animeService: AnimeService()))
-                ..getAllAnime(),
+                ..checkFirstTime(),
         ),
         BlocProvider(
           create: (context) => AnimeDetailsCubit(
@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => WatchServersCubit(
-              AnimeDetailsRepoImp(animeService: AnimeService())),        ),
+              AnimeDetailsRepoImp(animeService: AnimeService())),
+        ),
         BlocProvider(
           create: (context) => CollectionCubit(
             CollectionRepoImp(

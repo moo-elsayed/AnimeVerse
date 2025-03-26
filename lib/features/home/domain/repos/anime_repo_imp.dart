@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'package:anime_universe/core/utlis/anime_service.dart';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-
 import '../../data/models/all_anime.dart';
 import '../../data/models/search_anime.dart';
 import 'anime_repo.dart';
@@ -20,6 +18,9 @@ class AnimeRepoImp implements AnimeRepo {
       return right(allAnime);
     } catch (e) {
       if (e is DioException) {
+        if (e.type == DioExceptionType.connectionError){
+          return left('No internet connection');
+        }
         if (e.response != null && e.response!.data != null) {
           var errorData = e.response!.data;
 

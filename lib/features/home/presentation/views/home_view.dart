@@ -1,9 +1,11 @@
+import 'package:anime_universe/features/home/presentation/manager/anime_cubit/anime_cubit.dart';
 import 'package:anime_universe/features/home/presentation/views/search_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../../../../constants.dart';
 import '../../../collection/presentation/views/drawer_view.dart';
+import '../widgets/first_time_view_body.dart';
 import '../widgets/home_view_body.dart';
 
 class HomeView extends StatefulWidget {
@@ -14,10 +16,16 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  TextEditingController searchController = TextEditingController();
+  @override
+  void initState() {
+    context.read<AnimeCubit>().getAllAnime();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool? isFirstTime = context.watch<AnimeCubit>().firstTime;
+
     return Scaffold(
       backgroundColor: KMainColor,
       drawer: Drawer(
@@ -42,8 +50,8 @@ class _HomeViewState extends State<HomeView> {
             color: Colors.white,
           ),
         ),
-        //centerTitle: true,
         backgroundColor: KSecondaryColor,
+        surfaceTintColor: KSecondaryColor,
         actions: [
           IconButton(
             icon: Icon(
@@ -53,14 +61,15 @@ class _HomeViewState extends State<HomeView> {
             onPressed: () {
               context.pushTransition(
                 type: PageTransitionType.leftToRight,
-                //duration: Duration(milliseconds: 230),
                 child: SearchView(),
               );
             },
           )
         ],
       ),
-      body: HomeViewBody(),
+      body: isFirstTime == null
+          ? SizedBox()
+          : (isFirstTime == false ? HomeViewBody() : firstTimeViewBody()),
     );
   }
 }

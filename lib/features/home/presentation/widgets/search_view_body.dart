@@ -17,7 +17,9 @@ class SearchViewBody extends StatelessWidget {
     return BlocBuilder<AnimeCubit, AnimeStates>(
       builder: (context, state) {
         if (state is SearchAnimeSuccess) {
-          return SearchAnimeListView();
+          return state.searchedAnimeList.isNotEmpty
+              ? SearchAnimeListView()
+              : EmptySearchWidget();
         } else if (state is SearchAnimeFailure) {
           log(state.errorMessage);
           if (state.errorMessage ==

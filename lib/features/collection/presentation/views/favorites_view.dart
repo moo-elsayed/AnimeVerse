@@ -26,6 +26,7 @@ class _FavoritesViewState extends State<FavoritesView> {
       appBar: AppBar(
         leading: BackArrow(),
         backgroundColor: KSecondaryColor,
+        surfaceTintColor: KSecondaryColor,
         title: Text(
           'Favorites',
           style: TextStyle(color: Colors.white),

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../shared_preferences_manager.dart';
 import '../../../data/models/all_anime.dart';
 import '../../../data/models/search_anime.dart';
 import '../../../domain/repos/anime_repo.dart';
@@ -11,6 +14,14 @@ class AnimeCubit extends Cubit<AnimeStates> {
   List<AllAnime> allAnimeList = [];
   String? searchString;
   List<SearchAnime> searchList = [];
+  bool? firstTime;
+
+  Future<bool> checkFirstTime() async {
+    firstTime = await SharedPreferencesManager.getFirstTime();
+    log(firstTime.toString());
+    return firstTime!;
+  }
+
 
   Future searchAnime({required String animeName}) async {
     // عشان منعملش ال request تاني على الفاضي لو نفس الانمي
@@ -31,10 +42,15 @@ class AnimeCubit extends Cubit<AnimeStates> {
   void emptySearchList() {
     searchList = [];
     searchString = null;
-    emit(SearchInitial());
+    //emit(SearchInitial());
   }
 
   Future getAllAnime() async {
+    bool test = await checkFirstTime();
+    if (test == true) {
+      emit(AnimeInitial());
+      return;
+    }
     emit(GetAllAnimeLoading());
     var result = await animeRepo.getAllAnime();
     result.fold(

@@ -65,6 +65,7 @@ class _AnimeViewState extends State<AnimeView> {
         title: Text(widget.title),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
         backgroundColor: KSecondaryColor,
+        surfaceTintColor: KSecondaryColor,
         actions: _currentIndex == 1
             ? [
                 IconButton(

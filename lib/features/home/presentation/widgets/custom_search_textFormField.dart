@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField(
+class CustomSearchTextFormField extends StatelessWidget {
+  const CustomSearchTextFormField(
       {super.key,
       required this.controller,
       required this.hintText,
       this.prefixIcon,
-      this.onChanged});
+      this.onChanged,
+      required this.focusNode});
 
   final TextEditingController controller;
   final String hintText;
-
+  final FocusNode focusNode;
   final Widget? prefixIcon;
   final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       controller: controller,
       onChanged: onChanged,
       validator: (val) {
@@ -25,10 +27,11 @@ class CustomTextFormField extends StatelessWidget {
         }
         return null;
       },
-      cursorColor: Colors.white,
+      cursorColor: Colors.white54,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hintText,
+        hintStyle: TextStyle(color: Colors.white54),
         prefixIcon: prefixIcon ?? null,
         border: InputBorder.none,
         enabledBorder: InputBorder.none,

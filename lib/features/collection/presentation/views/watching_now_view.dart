@@ -28,6 +28,7 @@ class _WatchingNowViewState extends State<WatchingNowView> {
       appBar: AppBar(
         leading: BackArrow(),
         backgroundColor: KSecondaryColor,
+        surfaceTintColor: KSecondaryColor,
         title: Text(
           'Watching now',
           style: TextStyle(color: Colors.white),

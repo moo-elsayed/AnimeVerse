@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomErrorWidget extends StatelessWidget {
-  const CustomErrorWidget({super.key, required this.errorMessage});
-
-  final String errorMessage;
+class firstTimeViewBody extends StatelessWidget {
+  const firstTimeViewBody({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,12 @@ class CustomErrorWidget extends StatelessWidget {
             ),
           ),
           Text(
-            errorMessage,
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
+            'You need to set the api key first',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold
+            ),
           ),
         ],
       ),

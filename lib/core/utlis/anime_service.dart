@@ -7,9 +7,6 @@ import '../../features/home/data/models/all_anime.dart';
 import '../../features/home/data/models/search_anime.dart';
 import '../../features/details/data/models/watch_servers.dart';
 
-
-
-
 class AnimeService {
   final ApiService apiService = ApiService();
 
@@ -18,19 +15,15 @@ class AnimeService {
     return List<AllAnime>.from(
       response.data.map((anime) => AllAnime.fromJson(anime)),
     );
-    //return AllAnime.fromJson(response.data);
   }
 
   Future<List<SearchAnime>> searchAnime({required String animeName}) async {
     var response =
         await apiService.get(url: '${apiService.baseUrl}search/web/$animeName');
-    // log("Data received: ${response.data}");
-    //print("Type of episodes: ${json["episodes"].runtimeType}");
 
     return List<SearchAnime>.from(
       response.data.map((anime) => SearchAnime.fromJson(anime)),
     );
-    //return SearchAnime.fromJson(response.data);
   }
 
   Future<AnimeContent> getAnimeContent({required String animeId}) async {

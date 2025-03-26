@@ -47,6 +47,7 @@ class _WatchServersViewState extends State<WatchServersView> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: KSecondaryColor,
+        surfaceTintColor: KSecondaryColor,
       ),
       body: widget.episodeUrl == null
           ? WatchServersListView(

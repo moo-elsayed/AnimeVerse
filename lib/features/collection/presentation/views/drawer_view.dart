@@ -1,9 +1,5 @@
-import 'package:anime_universe/constants.dart';
-import 'package:anime_universe/features/collection/presentation/views/watching_now_view.dart';
-import 'package:anime_universe/features/collection/presentation/widgets/drawer_item.dart';
+import 'package:anime_universe/features/collection/presentation/widgets/drawer_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'favorites_view.dart';
 
 class DrawerView extends StatelessWidget {
   const DrawerView({super.key});
@@ -20,31 +16,12 @@ class DrawerView extends StatelessWidget {
               backgroundImage: AssetImage('assets/app_icon.jpg'),
               radius: 80,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .03,
+            Divider(
+              height: MediaQuery.of(context).size.height * 0.08,
+              endIndent: 20,
+              indent: 20,
             ),
-            DrawerItem(
-              title: 'Favorites',
-              iconData: Icons.favorite,
-              onTap: () {
-                context.pushTransition(
-                  type: PageTransitionType.leftToRight,
-                  //duration: Duration(milliseconds: 230),
-                  child: FavoritesView(),
-                );
-              },
-            ),
-            DrawerItem(
-              onTap: () {
-                context.pushTransition(
-                  type: PageTransitionType.leftToRight,
-                  //duration: Duration(milliseconds: 230),
-                  child: WatchingNowView(),
-                );
-              },
-              title: 'Watching now',
-              iconData: Icons.play_circle,
-            ),
+            DrawerListView(),
           ],
         ),
       ),
