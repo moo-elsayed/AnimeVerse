@@ -46,6 +46,9 @@ class _SearchViewState extends State<SearchView> {
           controller: searchController,
           hintText: 'Enter anime name',
           focusNode: textFieldFocus,
+          onFieldSubmitted: (value) {
+            context.read<AnimeCubit>().searchAnime(animeName: value);
+          },
         ),
         actions: [
           TextButton(

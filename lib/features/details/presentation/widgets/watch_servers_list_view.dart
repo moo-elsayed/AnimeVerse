@@ -13,12 +13,18 @@ class WatchServersListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Server> FHDServers =
-        servers.where((server) => server.quality == 'FHD').toList();
-    List<Server> HDServers =
-        servers.where((server) => server.quality == 'HD').toList();
-    List<Server> SDServers =
-        servers.where((server) => server.quality == 'SD').toList();
+    List<Server> FHDServers = servers
+        .where((server) =>
+            server.quality == 'FHD' && !server.name.contains('megamax me'))
+        .toList();
+    List<Server> HDServers = servers
+        .where((server) =>
+            server.quality == 'HD' && !server.name.contains('megamax me'))
+        .toList();
+    List<Server> SDServers = servers
+        .where((server) =>
+            server.quality == 'SD' && !server.name.contains('megamax me'))
+        .toList();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -87,8 +93,8 @@ class WatchServersListView extends StatelessWidget {
                         ),
                       ),
                       WatchServersListItem(
-                        server: Server(
-                            quality: '', name: 'megamax me', url: link!),
+                        server:
+                            Server(quality: '', name: 'megamax me', url: link!),
                         fromHome: false,
                       ),
                     ],

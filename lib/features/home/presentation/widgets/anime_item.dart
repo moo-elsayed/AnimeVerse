@@ -64,7 +64,7 @@ class AnimeItem extends StatelessWidget {
                   for (Server server in animeItem.episodes[0].servers) {
                     if (server.name.contains('megamax me')) {
                       link = server.url;
-                      animeItem.episodes[0].servers.remove(server);
+                      //animeItem.episodes[0].servers.remove(server);
                       break;
                     }
                   }

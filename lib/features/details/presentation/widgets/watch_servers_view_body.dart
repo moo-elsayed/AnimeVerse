@@ -19,7 +19,7 @@ class WatchServersViewBody extends StatelessWidget {
           for (Server server in state.watchServers.servers) {
             if (server.name.contains('megamax me')) {
               link = server.url;
-              state.watchServers.servers.remove(server);
+              //state.watchServers.servers.remove(server);
               break;
             }
           }

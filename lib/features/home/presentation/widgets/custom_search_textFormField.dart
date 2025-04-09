@@ -7,13 +7,15 @@ class CustomSearchTextFormField extends StatelessWidget {
       required this.hintText,
       this.prefixIcon,
       this.onChanged,
-      required this.focusNode});
+      required this.focusNode,
+      this.onFieldSubmitted});
 
   final TextEditingController controller;
   final String hintText;
   final FocusNode focusNode;
   final Widget? prefixIcon;
   final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class CustomSearchTextFormField extends StatelessWidget {
         errorBorder: getBorder(color: Colors.red),
         focusedBorder: InputBorder.none,
       ),
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 
