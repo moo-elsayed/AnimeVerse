@@ -18,12 +18,12 @@ class HomeViewBody extends StatelessWidget {
         } else if (state is GetAllAnimeFailure) {
           return CustomErrorWidget(errorMessage: state.errorMessage);
         } else if (state is GetAllAnimeSuccess) {
-          return AllAnimeListview(allAnimeList: state.allAnimeList);
+          return AllAnimeGridView(allAnimeList: state.allAnimeList);
         } else {
           AnimeCubit animeCubit = context.read<AnimeCubit>();
           return animeCubit.allAnimeList.isEmpty
               ? SizedBox()
-              : AllAnimeListview(allAnimeList: animeCubit.allAnimeList);
+              : AllAnimeGridView(allAnimeList: animeCubit.allAnimeList);
         }
       },
     );
